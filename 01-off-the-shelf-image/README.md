@@ -2,7 +2,7 @@
 
 How to deploy and work with an off-the-shelf image
 
-## Basic Webserver
+## Run A Container
 
 We will use the [nginx](https://hub.docker.com/_/nginx) image to deploy a basic webserver. The aim of this is to get an nginx webserver online and see the splash page.
 
@@ -14,7 +14,10 @@ docker run nginx
 This will look for a container called `nginx` locally, if it can't find one, it will look a Docker Hub where it will find the correct image.
 The image will run in the foreground and you will be connected directly to the output of the container. 
 
-This is useful for testing if containers run, but not running them for a specific purpose. To stop this, we can run a container in detached mode, using the `-d` flag. Note, the flags come before the name of the image you wish to run:
+
+## Detached Mode
+
+Running a container in the foreground is useful for testing if containers run, but not running them for a specific purpose. To stop this, we can run a container in detached mode, using the `-d` flag. Note, the flags come before the name of the image you wish to run:
 ```
 docker run -d nginx
 ```
@@ -25,6 +28,9 @@ You should get an output similar to this:
 4e540d26cdc8e18801fb0e0acc156b6d0131ad613fbb63c6d6db00e9b97b683d
 ```
 This shows that the command executed successfully.
+
+
+## Port Mapping
 
 To check the status of the container, we can run `docker ps` again:
 ```
