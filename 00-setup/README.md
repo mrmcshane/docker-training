@@ -1,5 +1,8 @@
 # Setup
 
+How to setup your machine with docker.
+
+The source for this can be found on my [github](https://github.com/mrmcshane/docker-training/tree/master/00-setup).
 
 ## Installation
 
