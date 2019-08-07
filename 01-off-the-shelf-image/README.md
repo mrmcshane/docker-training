@@ -1,6 +1,8 @@
 # Off-the-shelf Image
 
-How to deploy and work with an off-the-shelf image
+How to deploy and work with an off-the-shelf image.
+
+The source for this can be found on my [github](https://github.com/mrmcshane/docker-training/tree/master/01-off-the-shelf-image).
 
 ## Run A Container
 

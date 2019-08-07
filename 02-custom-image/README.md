@@ -1,6 +1,8 @@
 # Custom Image
 
-how to build, deploy and work with an custom image
+How to build, deploy and work with an custom image.
+
+The source for this can be found on my [github](https://github.com/mrmcshane/docker-training/tree/master/02-custom-image).
 
 ## Structure
 
