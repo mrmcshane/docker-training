@@ -89,8 +89,7 @@ mysql -h 127.0.0.1 -P 30066 -u root -p
 
 Show all of the current databases:
 ```
-mysql> show databases
-    -> ;
+mysql> show databases;
 +--------------------+
 | Database           |
 +--------------------+
@@ -110,8 +109,7 @@ Query OK, 1 row affected (0.00 sec)
 ```
 Confirm the test database is in place:
 ```
-mysql> show databases
-    -> ;
+mysql> show databases;
 +--------------------+
 | Database           |
 +--------------------+
@@ -136,8 +134,7 @@ mysql -h 127.0.0.1 -P 30066 -u root -p
 
 Show the databases:
 ```
-mysql> show databases
-    -> ;
+mysql> show databases;
 +--------------------+
 | Database           |
 +--------------------+
