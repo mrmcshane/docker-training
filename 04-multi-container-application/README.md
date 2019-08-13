@@ -101,7 +101,7 @@ The ports used between the application and the database is the internal port. In
 
 ### Dockerfile
 
-This is the basic docker config, it copies over the code,installs the python dependencies, and then runs the application.
+This is the basic docker config, it copies over the code, installs the python dependencies, and then runs the application.
 ```
 FROM python:3
 
@@ -125,17 +125,17 @@ We will deploy the default mariadb image and configure it with a port mapping an
 
 ## Deploying the application
 
-To deploy this application, run:
+Deploy the application:
 ```
 docker-compose up
 ```
 
-To run it in detached mode:
+Deploy it in detached mode:
 ```
 docker-compose up -d
 ```
 
-To also force a re-build of the docker image each time:
+Force a re-build of the docker image each time along with detached mode:
 ```
 docker-compose up -d --build
 ```
