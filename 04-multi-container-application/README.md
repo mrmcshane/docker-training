@@ -83,7 +83,7 @@ The `networks` key under a service attaches a service to a network, allowing int
 
 The `volumes` top level key creates a volume that can be attached to a container.
 
-The `volumes` key under a service attaches a volume to a container.
+The `volumes` key under a service attaches a volume to a container, specified as `volume:mount/point`.
 
 
 
