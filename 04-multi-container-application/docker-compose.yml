@@ -1,0 +1,16 @@
+version: '3'
+services:
+  web:
+    build: ./containers/python
+    ports:
+      - "30005:80"
+  mariadb:
+    image: "mariadb/server"
+    environment:
+      MARIADB_ROOT_PASSWORD: pass
+    ports:
+      - "30066:3306"
+    volumes:
+      - mariadb-data:/var/lib/mysql
+volumes:
+  mariadb-data:
