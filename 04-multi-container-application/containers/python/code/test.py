@@ -6,21 +6,20 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return "hello world!"
 
 @app.route("/something")
 def something():
-    return "Were you looking for something?"
+    return "were you looking for something?"
 
 @app.route("/db")
 def databasetest():
 
-    db = MySQLdb.connect(host="mariadb-clusterip.default.svc.cluster.local",
-                        user="test_user", 
-                        passwd="test_pass",
-                        db="test_db") 
+    db = MySQLdb.connect(host="mariadb",
+                        user="root", 
+                        passwd="pass") 
     if db:
-        db_output = "because the database connection works!"
+        db_output = "database connection works!"
     else:
         db_output = "db connection broke"
 

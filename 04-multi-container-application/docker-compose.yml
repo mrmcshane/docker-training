@@ -3,14 +3,20 @@ services:
   web:
     build: ./containers/python
     ports:
-      - "30005:80"
+      - "30015:80"
+    networks:
+      - network-04
   mariadb:
     image: "mariadb/server"
     environment:
       MARIADB_ROOT_PASSWORD: pass
     ports:
-      - "30066:3306"
+      - "30016:3306"
     volumes:
       - mariadb-data:/var/lib/mysql
+    networks:
+      - network-04
 volumes:
   mariadb-data:
+networks:
+  network-04:
