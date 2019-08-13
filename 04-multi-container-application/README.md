@@ -89,8 +89,7 @@ The `volumes` key under a service attaches a volume to a container.
 
 ## Python Application
 
-I won't paste all of the application code as the code itself doesn't matter, if you want to use it, it's hosted [here]
-(https://github.com/mrmcshane/docker-training/blob/master/04-multi-container-application/containers/python/code/test.py).
+I won't paste all of the application code as the code itself doesn't matter, if you want to use it, it's hosted [here](https://github.com/mrmcshane/docker-training/blob/master/04-multi-container-application/containers/python/code/test.py).
 
 The main part of the application that matters is the database connection string:
 ```
