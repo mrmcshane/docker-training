@@ -16,7 +16,7 @@ A container is a standard unit of software that packages up code and all its d
 
 A virtual machine is a fully functional and distinct operating system, with everything packaged to run one or more applications. This allows virtual machines of different OS's to run natively on the hypervisor, allowing direct access to the infrastructure to the guest OS's.
 
-A container is a process, bundles with the libraries and binaries required to run on a linux kernel.
+A container is a process, bundled with the libraries and binaries required to run on a linux kernel.
 The container engine allows these packaged processes to run on the Host OS as though they were native processes, but only allowing it to access the libraries and binaries included in the container. As it runs as a process on the Host OS, libraries and binaries that are common between containers will be shared without them needing to know about it.
 
 ![vm vs container](img/vm_vs_container.png)
