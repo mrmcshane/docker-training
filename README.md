@@ -28,7 +28,8 @@ A Docker Image is the template of an un-deployed container
 
 It contains the libraries, binaries, and code required to run the application
 
-![docker image](img/docker_image.png)
+[//]: # ( commenting out this image as it doesn't fit well in a readme )
+[//]: # ( ![docker image](img/docker_image.png) )
 
 
 ## Image storage and deployment
