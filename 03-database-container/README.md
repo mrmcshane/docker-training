@@ -36,7 +36,7 @@ Delete the container you just spun up.
 
 ### Configuring MariaDB
 
-We will want to properly configure mariadb with a password this time to ensure that
+We will want to properly configure mariadb with a password this time to ensure at least a basic level of security.
 
 Looking at the documentation, the root password can be set by configuring an environment variable `MARIADB_ROOT_PASSWORD` with a password on startup:
 ```
