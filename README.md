@@ -2,6 +2,7 @@
 
 This will hopefully give you a basic idea of what docker is and how to create and manage a containerized application using docker, using a couple of real world examples.
 
+
 ## What is Docker?
 
 Docker is a containerization technology, one of many.
@@ -133,3 +134,13 @@ docker stop [containerID]
 ![docker stop example](img/shell_docker_stop.png)
 
 
+## Excersizes
+
+Firstly, visit [this guide](https://github.com/mrmcshane/docker-training/tree/master/00-setup) on how to quickly set up docker for mac.
+
+Then there are several excersizes that will guide you through a lot of the basic functionality of docker and give you a decent grasp of how to build and manage containers:
+
+1. [Off-the-shelf Image](https://github.com/mrmcshane/docker-training/tree/master/01-off-the-shelf-image)
+2. [Custom Image](https://github.com/mrmcshane/docker-training/tree/master/02-custom-image)
+3. [Database Container](https://github.com/mrmcshane/docker-training/tree/master/03-database-container)
+4. [Multi-container Application](https://github.com/mrmcshane/docker-training/tree/master/04-multi-container-application)
