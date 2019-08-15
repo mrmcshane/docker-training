@@ -54,7 +54,8 @@ There are many options:
 
 A Dockerfile is a text file that describes a container image.
 
-Each line is a separate layer.
+
+A container has layers, like an onion, or an ogre. Each instruction is considered a layer.
 
 For example, to use a minimal nginx base image and copy app code from app/ to the web root:
 
