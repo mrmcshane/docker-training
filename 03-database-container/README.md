@@ -22,10 +22,11 @@ It's that simple, and it will be around until you specifically destroy it.
 
 ### Attach the volume to a container
 
-This is passed as the `-v` argument when running a container:
+This is passed as the `-v` argument when running a container.
 
+We will also be using an environment variable to ensure mariadb is configured with the environment variable `MARIADB_ALLOW_EMPTY_PASSWORD` to set an empty password for testing. This is done with the `-e` flag:
 ```
-docker run -d -p 30066:3306 -v mariadb-data:/var/lib/mysql mariadb/server
+docker run -d -p 30066:3306 -v mariadb-data:/var/lib/mysql -e MARIADB_ALLOW_EMPTY_PASSWORD=true mariadb/server
 ```
 
 This will spin up a `mariadb/server` container with the volume attached.
@@ -35,11 +36,9 @@ Delete the container you just spun up.
 
 ### Configuring MariaDB
 
-We will want to at least configure the root password for mariadb or we wont be able to connect to or manage the instance.
+We will want to properly configure mariadb with a password this time to ensure that
 
-Looking at the documentation, the root password can be set by configuring an environment variable `MARIADB_ROOT_PASSWORD` with a password on startup.
-
-To configure an environment variable , we use the `-e` flag when spinning up a container:
+Looking at the documentation, the root password can be set by configuring an environment variable `MARIADB_ROOT_PASSWORD` with a password on startup:
 ```
 docker run -d -p 30066:3306 -v mariadb-data:/var/lib/mysql -e MARIADB_ROOT_PASSWORD=pass mariadb/server
 ```
@@ -49,7 +48,7 @@ Now try and connect to the instance:
 mysql -h 127.0.0.1 -P 30066 -u root -p
 ```
 
-You will receive the error: `ERROR 1045 (28000): Access denied for user 'root'@'172.17.0.1' (using password: YES)`. This is because we previously spun up a mariadb instance with this volume, so even though we configured a root password in an environment variable, as it's a persistent volume it already has a mariadb installation configured.
+You will receive the error: `ERROR 1045 (28000): Access denied for user 'root'@'172.17.0.1' (using password: YES)`. This is because we previously spun up a mariadb instance with this volume, so even though we configured a root password in an environment variable, as it's a persistent volume it already has a mariadb installation configured with no root password specified.
 
 #### Accessing the container
 
