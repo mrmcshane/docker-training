@@ -28,8 +28,10 @@ A Docker Image is the template of an un-deployed container
 
 It contains the libraries, binaries, and code required to run the application
 
-[//]: # ( commenting out this image as it doesn't fit well in a readme )
-[//]: # ( ![docker image](img/docker_image.png) )
+<!---
+commenting out this image as it doesn't fit well in a readme
+![docker image](img/docker_image.png) 
+--->
 
 
 ## Image storage and deployment
@@ -65,7 +67,10 @@ COPY app/ /usr/share/nginx/html
 
 ## docker build
 
+<!---
+commenting out this image as it doesn't fit well in a readme
 ![docker build](img/docker_build.png)
+--->
 
 Docker command to create an image from a Dockerfile:
 
@@ -78,7 +83,10 @@ docker build [directory] [flag] [name]
 
 ## docker push
 
+<!---
+commenting out this image as it doesn't fit well in a readme
 ![docker push](img/docker_push.png)
+--->
 
 Docker command to push an image to a remote registry:
 
@@ -91,7 +99,10 @@ docker push [name]
 
 ## docker run
 
+<!---
+commenting out this image as it doesn't fit well in a readme
 ![docker run](img/docker_run.png)
+--->
 
 Docker command to run an image as a container:
 
