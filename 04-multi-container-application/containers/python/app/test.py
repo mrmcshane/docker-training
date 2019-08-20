@@ -9,7 +9,7 @@ def databasetest():
 
     db_output = "OFFLINE"
     try:
-        db = MySQLdb.connect(host="python-backend",
+        db = MySQLdb.connect(host="mariadb",
                         user="root", 
                         passwd="pass") 
         if db:
