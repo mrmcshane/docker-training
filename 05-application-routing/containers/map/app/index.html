@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<?php require 'head.php';?>
+<body>
+
+
+<section id="main-content">
+<section class="wrapper">
+
+
+
+<div class="col-md-8">
+    <section class="panel">
+        <header class="panel-heading">System Chart</header>
+        <div class="panel-body" id='monthly' >
+
+        <div id="system-chart"/>
+
+
+        </div>
+    </section>
+</div>
+
+
+</section>
+</section>
+<!--main content end-->
+
+
+</div>
+<!--right sidebar end-->
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+<script src="https://ialab.it.monash.edu/webcola/cola.min.js" charset="utf-8"></script>
+<script>
+
+    //canvas
+    var width = 1050,
+        height = 640;
+
+    //node
+    var node_size = 70;
+    var node_padding = 10;
+
+    //link
+    var link_width = 4;
+
+    //label
+    var label_size = "12px";
+    var label_font = "ubuntu,verdana";
+    var label_weight = "normal";
+    var label_aligh = "center";
+
+
+
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+    var cola = cola.d3adaptor(d3)
+        .linkDistance(100)
+        .avoidOverlaps(true)
+        .handleDisconnected(false)
+        .size([width, height]);
+
+    var svg = d3.select("#system-chart").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    d3.json("data.json", function (error, graph) {
+
+        graph.nodes.forEach(function (v) { v.width = v.height = node_size; })
+        cola
+            .nodes(graph.nodes)
+            .links(graph.links)
+            .start(20, 20, 20);
+
+        var link = svg.selectAll(".link")
+            .data(graph.links)
+            .enter().append("line")
+            .attr("class", "link")
+            .attr("stroke-width", link_width)
+            .attr("stroke", function (d) { return d.fill; });
+
+        var node = svg.selectAll(".node")
+            .data(graph.nodes)
+            .enter().append("rect")
+            .attr("class", "node")
+            .attr("width", function (d) { return d.width - 2 * node_padding; })
+            .attr("height", function (d) { return d.height - 2 * node_padding; })
+            .attr("rx", function (d) { return (d.width - 2 * node_padding) /2; })
+            .attr("ry", function (d) { return (d.width - 2 * node_padding) /2; })
+            .style("fill", function (d) { return d.fill; })
+            .call(cola.drag)
+            .on('mouseup', function (d) {
+                d.fixed = 0;
+                cola.alpha(0); // fire it off again to satify gridify
+            });
+
+        var label = svg.selectAll(".label")
+            .data(graph.nodes)
+            .enter().append("text")
+            .attr("class", "label")
+            .attr("style", "font-size:"+label_size+"; font-weight:"+label_weight+"; font-family:"+label_font+";")
+            .text(function (d) { return d.name; })
+            .call(cola.drag);
+
+        node.append("title")
+            .text(function (d) { return d.name; });
+
+        cola.on("tick", function () {
+            link.attr("x1", function (d) { return d.source.x; })
+                .attr("y1", function (d) { return d.source.y; })
+                .attr("x2", function (d) { return d.target.x; })
+                .attr("y2", function (d) { return d.target.y; });
+
+            node.attr("x", function (d) { return d.x - d.width / 2 + node_padding; })
+                .attr("y", function (d) { return d.y - d.height / 2 + node_padding; });
+
+            label.attr("x", function (d) { return d.x; })
+                 .attr("y", function (d) {
+                     var h = this.getBBox().height;
+                     return d.y + h/4;
+                 });
+        });
+    });
+
+</script>
+
+
+</body>
+</html>
