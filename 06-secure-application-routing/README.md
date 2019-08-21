@@ -1,4 +1,6 @@
-# Application Routing
+# Secure Application Routing
+
+**Note:** This is currently just a copy of Application Routing until I add the SSL cert sections.
 
 Building on the multi-container application project, this details how we would configure routing to multiple docker applications on the same domain using `docker-compose` and `traefik`.
 
