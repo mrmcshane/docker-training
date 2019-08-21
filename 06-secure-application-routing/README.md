@@ -107,22 +107,12 @@ traefik:
 
 ### Map
 
-The map application is a simple declaration, the only traefik label needed is one to specify the host mapping (fqdn) of the application.
-```
-map:
-  build: ./containers/map
-  ports:
-    - "30010-30020:80"
-  networks:
-    - public
-  labels:
-    - "traefik.frontend.rule=Host:map.localhost"
-```
+
 
 
 ### Python
 
-As the python app is connected to two networks, the default network needs to be specified so traefic knows which one to route traffic to. As with the other application, the host is specified:
+As python is connected to two networks, the default network needs to be specified so traefic knows which one to route traffic to. As with the other applications, the host is specified:
 ```
   python:
   build: ./containers/python
