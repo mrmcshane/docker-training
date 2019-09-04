@@ -74,7 +74,6 @@ commenting out this image as it doesn't fit well in a readme
 --->
 
 Docker command to create an image from a Dockerfile:
-
 ```
 docker build [directory] [flag] [name]
 ```
@@ -90,7 +89,6 @@ commenting out this image as it doesn't fit well in a readme
 --->
 
 Docker command to push an image to a remote registry:
-
 ```
 docker push [name]
 ```
@@ -106,7 +104,6 @@ commenting out this image as it doesn't fit well in a readme
 --->
 
 Docker command to run an image as a container:
-
 ```
 docker run [flag] [name]
 ```
@@ -117,7 +114,6 @@ docker run [flag] [name]
 ## docker ps
 
 Docker command to show all running containers:
-
 ```
 docker ps
 ```
@@ -128,7 +124,6 @@ docker ps
 ## docker exec
 
 Docker command to execute a command inside a running container. We usually use the `-it` flag for interactive TTY:
-
 ```
 docker exec [flag] [containerID] [command]
 ```
@@ -139,13 +134,21 @@ docker exec [flag] [containerID] [command]
 ## docker stop
 
 Docker command to stop a running container:
-
 ```
 docker stop [containerID]
 ```
 
 ![docker stop example](img/shell_docker_stop.png)
 
+
+## docker help
+
+For help with any of the docker functionality or to check any of the flags, you can use the help option:
+```
+docker --help
+```
+
+![docker help example](img/shell_docker_help.png)
 
 ## Excersizes
 

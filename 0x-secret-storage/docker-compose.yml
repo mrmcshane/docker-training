@@ -1,0 +1,24 @@
+version: '3'
+services:
+  vault:
+    image: vault
+    ports:
+      - "8200:8200"
+    networks:
+      - network-secrets
+    volumes:
+      - vault-fs:/mnt/vault/file
+      - ${PWD}/config.json:/home/vault/config.json
+    cap_add:
+      - IPC_LOCK
+    command: /bin/sh -c "chown vault:vault /mnt/vault/file && /bin/vault server -config /home/vault/config.json"
+  nginx:
+    image: "nginx:alpine"
+    ports:
+      - "80:80"
+    networks:
+      - network-secrets
+volumes:
+  vault-fs:
+networks:
+  network-secrets:
