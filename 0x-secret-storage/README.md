@@ -2,8 +2,7 @@
 
 We will be using vault in this example of how to do secret storage with containers.
 
-**Note:** this is a work in progress, don't follow this guide just yet
-
+**Note:** This is less of a task about learning docker than it is a basic example of using docker to host a basic python application with its secrets stored in vault.
 
 
 ## Docker Compose Config
@@ -47,7 +46,9 @@ The main points are that we have two custom volumes attached to the vault contai
 
 The command that is run when the vault instance comes online ensures that the mounted volume has the correct permissions (as we don't run vault as root), and that the vault server starts up with the specified config file.
 
+The vault token isn't specified here, but it will be given to you when you build the vault container for the first time. As the secret storage is on the volume, you can re-create the vault container and the token will work out of the box.
 
+If you need to re-create the vault container from scratch, be sure to delete the volume.
 
 ## Create Secrets
 
