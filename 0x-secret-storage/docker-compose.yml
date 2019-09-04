@@ -12,12 +12,15 @@ services:
     cap_add:
       - IPC_LOCK
     command: /bin/sh -c "chown vault:vault /mnt/vault/file && /bin/vault server -config /home/vault/config.json"
-  nginx:
-    image: "nginx:alpine"
+  python:
+    build: ./containers/orange-python
     ports:
       - "80:80"
     networks:
       - network-secrets
+    environment:
+      - VAULT_URL=http://vault:8200
+      - VAULT_TOKEN=s.zRCl8MSY0N3Kx8GEMwmYgtaq
 volumes:
   vault-fs:
 networks:
