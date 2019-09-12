@@ -21,6 +21,7 @@ The container engine allows these packaged processes to run on the Host OS as th
 
 ![vm vs container](img/vm_vs_container.png)
 
+Note: Technically there is an OS bundled in the containers, but it's usually something extremely cut down like Alpine Linux at ~5MB.
 
 ## Docker Image
 
