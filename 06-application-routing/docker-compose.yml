@@ -1,0 +1,49 @@
+version: '3.3'
+services:
+  traefik:
+    image: traefik:v2.0-alpine
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Access to Docker
+      - ./containers/traefik/traefik.yml:/traefik.yml # Traefik configuration
+    ports:
+      - "80:80"
+      - "8080:8080"
+    networks:
+      - public
+      - private
+  blue-python:
+    image: mrmcshane/python:05-blue
+    ports:
+      - "30003:80"
+    labels:
+      - traefik.http.routers.blue-python.rule=Host(`blue-python.localhost`)
+    networks:
+      - public
+      - private
+  green-python:
+    image: mrmcshane/python:05-green
+    ports:
+      - "30004:80"
+    labels:
+      - traefik.http.routers.green-python.rule=Host(`green-python.localhost`)
+    networks:
+      - public
+      - private
+  python-backend:
+    image: "mariadb/server"
+    environment:
+      MARIADB_ROOT_PASSWORD: pass
+    ports:
+      - "30005:3306"
+    volumes:
+      - python-backend-data:/var/lib/mysql
+    labels:      
+      - traefik.enabled=false
+    networks:
+      - private
+volumes:
+  python-backend-data:
+networks:
+  public:
+  private:

@@ -1,0 +1,28 @@
+version: '3'
+services:
+  blue:
+    image: mrmcshane/python:05-blue
+    ports:
+      - "30001:80"
+    networks:
+      - public
+      - private
+  green:
+    image: mrmcshane/python:05-green
+    ports:
+      - "30002:80"
+    networks:
+      - public
+  mariadb:
+    image: "mariadb/server"
+    environment:
+      MARIADB_ROOT_PASSWORD: pass
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    networks:
+      - private
+volumes:
+  mariadb-data:
+networks:
+  public:
+  private:

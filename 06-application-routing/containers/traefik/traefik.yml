@@ -1,0 +1,15 @@
+api:
+  dashboard: true
+  insecure: true
+
+# entry point of http/80
+entryPoints:
+  http:
+    address: ":80"
+
+# this allows traefik to interact with docker
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    watch: true
+    exposedByDefault: true
