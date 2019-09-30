@@ -14,25 +14,35 @@ A container is a standard unit of software that packages up code and all its d
 
 ## Virtual Machines vs Containers
 
-A virtual machine is a fully functional and distinct operating system, with everything packaged to run one or more applications. This allows virtual machines of different OS's to run natively on the hypervisor, allowing direct access to the infrastructure to the guest OS's.
-
-A container is a process, bundled with the libraries and binaries required to run on a linux kernel.
-The container engine allows these packaged processes to run on the Host OS as though they were native processes, but only allowing it to access the libraries and binaries included in the container. As it runs as a process on the Host OS, libraries and binaries that are common between containers will be shared without them needing to know about it.
-
 ![vm vs container](img/vm_vs_container.png)
 
-Note: Technically there is an OS bundled in the containers, but it's usually something extremely cut down like Alpine Linux at ~5MB.
+You’ve probably seen a diagram like this before, it gives an idea of the main differences between VMs and Containers.
+
+On the left, we see a standard virtualization model: A hypervisor sitting on physical infrastructure, in the hypervisor there are a number of virtual machines, each with it’s own Guest OS.
+
+This model gives you the ability to run application workloads on top of very different operating systems, which can be beneficial, but comes with a large overhead.
+
+![vm vs container 2](img/vm_vs_container_2.png)
+
+Containers build upon the idea of VMs, but move the abstraction one layer higher, removing the need to virtualize the Guest OS (mostly).
+
+A container is essentially just a process running your application, bundled with any library dependencies. This allows a container to be smaller and more resource efficient than the old Virtual Machine model. 
+
+Containers still contain an OS layer, but it’s usually something less than 10MB in size just to be able to interact with the Host OS.
+
+
 
 ## Docker Image
 
-A Docker Image is the template of an un-deployed container
+![docker image](img/docker_image.png)
 
-It contains the libraries, binaries, and code required to run the application
+A Docker Image is a container template.
 
-<!---
-commenting out this image as it doesn't fit well in a readme
-![docker image](img/docker_image.png) 
---->
+When a Dockerfile is built, it creates a docker image. The image contains the libraries, binaries, and code required to run the application.
+
+Images are run on the container engine as containers.
+
+As the idea is only one process per container, we aim to make this as streamlined as possible.
 
 
 ## Image storage and deployment
@@ -66,13 +76,57 @@ FROM nginx:alpine
 COPY app/ /usr/share/nginx/html
 ```
 
+## Storage
 
-## docker build
+![docker volume](img/docker_storage.png)
 
-<!---
-commenting out this image as it doesn't fit well in a readme
-![docker build](img/docker_build.png)
---->
+By default, any data stored or created on a container is ephemeral (lost if the container is lost).
+
+There are three different types of storage that can be assigned to a container:
+
+- Bind Mount
+  - Mounted directory from the docker host
+  - Persistent across reboots
+  - Used for something
+- Volume
+  - Virtual Disk created on docker host
+  - Persistent across reboots
+  - Bound to the specific host
+- Tmpfs
+  - In-memory ephemeral storage
+
+
+## Networking
+
+### Docker
+
+![docker port mapping](img/docker_port_map.png)
+
+- Host based network
+- Discoverable containers by default
+- Relies on Port Mapping
+
+### Docker Compose
+
+![docker compose networking](img/docker_compose_networking.png)
+
+- Separate application networks
+- Service based DNS resolution
+
+
+## Docker Commands 
+
+### docker help
+
+For help with any of the docker functionality or to check any of the flags, you can use the help option:
+```
+docker --help
+```
+
+![docker help example](img/shell_docker_help.png)
+
+
+### docker build
 
 Docker command to create an image from a Dockerfile:
 ```
@@ -82,12 +136,7 @@ docker build [directory] [flag] [name]
 ![docker build example](img/shell_docker_build.png)
 
 
-## docker push
-
-<!---
-commenting out this image as it doesn't fit well in a readme
-![docker push](img/docker_push.png)
---->
+### docker push
 
 Docker command to push an image to a remote registry:
 ```
@@ -97,12 +146,7 @@ docker push [name]
 ![docker push example](img/shell_docker_push.png)
 
 
-## docker run
-
-<!---
-commenting out this image as it doesn't fit well in a readme
-![docker run](img/docker_run.png)
---->
+### docker run
 
 Docker command to run an image as a container:
 ```
@@ -112,7 +156,7 @@ docker run [flag] [name]
 ![docker run example](img/shell_docker_run.png)
 
 
-## docker ps
+### docker ps
 
 Docker command to show all running containers:
 ```
@@ -122,7 +166,7 @@ docker ps
 ![docker ps example](img/shell_docker_ps.png)
 
 
-## docker exec
+### docker exec
 
 Docker command to execute a command inside a running container. We usually use the `-it` flag for interactive TTY:
 ```
@@ -132,24 +176,66 @@ docker exec [flag] [containerID] [command]
 ![docker exec example](img/shell_docker_exec.png)
 
 
-## docker stop
+### docker stop / kill
 
 Docker command to stop a running container:
 ```
 docker stop [containerID]
+docker kill [containerID]
 ```
+
+docker kill stops the container instantly
+
+docker stop sends a request to stop, and then a kill after a 10s grace period
 
 ![docker stop example](img/shell_docker_stop.png)
 
 
-## docker help
+### docker rm
 
-For help with any of the docker functionality or to check any of the flags, you can use the help option:
+Docker command to remove a stopped container:
 ```
-docker --help
+docker rm [containerID]
+```
+This is useful to clean up containers once they are no longer needed
+
+![docker rm example](img/shell_docker_rm.png)
+
+
+### docker image
+
+List all local docker images:
+```
+docker images [Options]
 ```
 
-![docker help example](img/shell_docker_help.png)
+Options:
+```
+[repository]        Specify only images from this repo
+--filter [filter]   Filter Results
+```
+
+![docker image example](img/shell_docker_image.png)
+
+
+### docker volume
+
+Work with docker volumes:
+```
+docker volume [Command] [Options]
+```
+
+Commands:
+```
+create      Create a volume
+inspect     Display detailed information
+ls          List volumes
+prune       Remove all unused local volumes
+rm          Remove one or more volumes
+```
+
+![docker volume example](img/shell_docker_volume.png)
+
 
 ## Excersizes
 
@@ -161,3 +247,4 @@ Then there are several excersizes that will guide you through a lot of the basic
 2. [Custom Image](https://github.com/mrmcshane/docker-training/tree/master/02-custom-image)
 3. [Database Container](https://github.com/mrmcshane/docker-training/tree/master/03-database-container)
 4. [Multi-container Application](https://github.com/mrmcshane/docker-training/tree/master/04-multi-container-application)
+5. [Networking](https://github.com/valtech-uk/docker-training/tree/master/05-networking)
