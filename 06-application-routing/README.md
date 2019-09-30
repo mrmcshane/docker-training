@@ -2,7 +2,10 @@
 
 Building on the multi-container application project, this details how we would configure routing to multiple docker applications on the same domain using `docker-compose` and `traefik`.
 
-The source for this can be found on my [github](https://github.com/mrmcshane/docker-training/tree/master/05-application-routing).
+Traefik an example of an application loadbalancer/router for docker, there are many others.
+
+The source for this can be found on my [github](https://github.com/valteck-uk/docker-training/tree/master/06-application-routing).
+
 
 ## Structure
 
@@ -11,17 +14,12 @@ Build a directory structure like the one below:
 ```
 05-application-routing
 |-- containers
-|   `-- map
-|   |   |-- app
-|   |   |   `-- ...
-|   |   `-- Dockerfile
 |   |-- python
 |   |   |-- app
 |   |   |   `-- ...
 |   |   `-- Dockerfile
 |   `-- traefik
-|       `-- config
-|           `-- traefik.toml
+|       `-- traefik.toml
 |-- docker-compose.yml
 `-- README.md
 ```
@@ -29,43 +27,6 @@ Build a directory structure like the one below:
 Please clone the respository to use the sample applications, or create a sample application yourself.
 
 
-## Map
-
-The map application is a simple html application, like we have deployed before.
-
-## Python
-
-The python application is the same application that we have previously deployed.
-
-## Traefik
-
-As we are only adding a config file to the traefik default image, we don't need anything else in this directory.
-
-### Config
-
-The config for traefik is written in TOML, and is pretty simple.
-
-Create the entrypoint defaults:
-```
-defaultEntryPoints = ["http"]
-```
-
-Configure the main entrypoint for the router to be `HTTP/80`:
-```
-[entryPoints]
-  [entryPoints.http]
-  address = ":80"
-```
-
-Allow traefic to interact with docker via a unix socket:
-```
-[docker]
-endpoint = "unix:///var/run/docker.sock"
-domain = "docker.localhost"
-watch = true
-exposedByDefault = false
-```
- 
 ## Docker-Compose
 
 This goes over the main parts of the `docker-compose.yml` file, download the whole file for the full details.
@@ -75,66 +36,64 @@ Traefik is used as the application router for docker images as it interacts with
 This is done via labels:
 ```
 labels:
-  - "traefik.docker.network=public"
-  - "traefik.enable=true"
-  - "traefik.frontend.rule=Host:traefik.localhost"
-  - "traefik.port=8080"
-  - "traefik.protocol=http"
+  - traefik.http.routers.blue-python.rule=Host(`blue-python.localhost`)
 ```
+
 
 ### Traefik
 
 The traefik container is pretty standard, with the socket file exposed to the image via the volume section, and the config file copied across:
 ```  
-traefik:
-  image: traefik:latest
-  command: "--api --docker"
-  restart: always
-  networks:
-    - public
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - ./traefic/config/traefik.toml:/traefik.toml
-  ports:
-    - "80:80"
-  labels:
-    - "traefik.docker.network=public"
-    - "traefik.enable=true"
-    - "traefik.frontend.rule=Host:traefik.localhost"
-    - "traefik.port=8080"
-    - "traefik.protocol=http"
+  traefik:
+    image: traefik:v2.0-alpine
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Access to Docker
+      - ./containers/traefik/traefik.yml:/traefik.yml # Traefik configuration
+    ports:
+      - "80:80"
+      - "8080:8080"
+    networks:
+      - traefik-network
   ```
 
-### Map
 
-The map application is a simple declaration, the only traefik label needed is one to specify the host mapping (fqdn) of the application.
+#### traefik.yml
+
+The config you apply enabled the dashboard, port 80 inbound connections, and the docker provider:
 ```
-map:
-  build: ./containers/map
-  ports:
-    - "30010-30020:80"
-  networks:
-    - public
-  labels:
-    - "traefik.frontend.rule=Host:map.localhost"
+api:
+  dashboard: true
+  insecure: true
+
+# entry point of http/80
+entryPoints:
+  http:
+    address: ":80"
+
+# this allows traefik to interact with docker
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    watch: true
+    exposedByDefault: true
 ```
 
 
 ### Python
 
-As the python app is connected to two networks, the default network needs to be specified so traefic knows which one to route traffic to. As with the other application, the host is specified:
+The python apps are created as normal, however an additional label is added to show how to route through the application through traefik:
 ```
-  python:
-  build: ./containers/python
-  ports:
-    - "30003:80"
-  networks:
-    - public
-    - private
-  labels:
-    - "traefik.docker.network=public"
-    - "traefik.frontend.rule=Host:python.localhost"
+  blue-python:
+    image: mrmcshane/python:06-blue
+    ports:
+      - "30003:80"
+    labels:
+      - traefik.http.routers.blue-python.rule=Host(`blue-python.localhost`)
+    networks:
+      - traefik-network
 ```
+
 
 ## Deploying the application
 
@@ -143,13 +102,15 @@ Deploy the application:
 docker-compose up -d --build
 ```
 
+
 ## Testing
 
-To access the Traefik dashboard, visit: http://traefik.localhost
+To access the Traefik dashboard, visit: http://localhost:8080
 
-To access the Map application, visit: http://map.localhost
+To access the Blue application, visit: http://blue-python.localhost
 
-To access the Python application, visit: http://python.localhost
+To access the Green application, visit: http://green-python.localhost
+
 
 ## Note
 

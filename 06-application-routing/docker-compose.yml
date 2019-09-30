@@ -10,26 +10,23 @@ services:
       - "80:80"
       - "8080:8080"
     networks:
-      - public
-      - private
+      - traefik-network
   blue-python:
-    image: mrmcshane/python:05-blue
+    image: mrmcshane/python:06-blue
     ports:
       - "30003:80"
     labels:
       - traefik.http.routers.blue-python.rule=Host(`blue-python.localhost`)
     networks:
-      - public
-      - private
+      - traefik-network
   green-python:
-    image: mrmcshane/python:05-green
+    image: mrmcshane/python:06-green
     ports:
       - "30004:80"
     labels:
       - traefik.http.routers.green-python.rule=Host(`green-python.localhost`)
     networks:
-      - public
-      - private
+      - traefik-network
   python-backend:
     image: "mariadb/server"
     environment:
@@ -41,9 +38,8 @@ services:
     labels:      
       - traefik.enabled=false
     networks:
-      - private
+      - traefik-network
 volumes:
   python-backend-data:
 networks:
-  public:
-  private:
+  traefik-network:
