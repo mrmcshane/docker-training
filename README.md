@@ -47,7 +47,7 @@ As the idea is only one process per container, we aim to make this as streamline
 
 ## Image storage and deployment
 
-A registry is a place to store and distribute images
+Much like source code, the image is created locally, but you’ll want to store it remotely. Imaged are stored in registry, these can be self-hosted or hosted by a third party such a Docker Hub. Most cloud providers usually provide their own registry.
 
 There are many options:
 
@@ -102,16 +102,19 @@ There are three different types of storage that can be assigned to a container:
 
 ![docker port mapping](img/docker_port_map.png)
 
-- Host based network
-- Discoverable containers by default
-- Relies on Port Mapping
+Networking in Docker is reasonably simple, it's a host based network where the containers are discoverable by default if any ports are exposed on the container.
+
+If a container runs a webserver on port 80, you can choose to expose port 80 on the host and map it to port 80 on that container. You can map any* port on the host to any port in the container.
+
+*any meaning anything not already in use on the host.
 
 ### Docker Compose
 
 ![docker compose networking](img/docker_compose_networking.png)
 
-- Separate application networks
-- Service based DNS resolution
+Networking in Docker Compose is a little different.
+
+Virtual networks are created that containers can be assigned to, allowing network segregation between applications. This also includes service based DNS resolution within the virtual network.
 
 
 ## Docker Commands 
