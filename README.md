@@ -179,6 +179,20 @@ docker exec [flag] [containerID] [command]
 ![docker exec example](img/shell_docker_exec.png)
 
 
+### docker logs
+
+Show logs from the container process:
+```
+docker logs [containerID]
+```
+
+A side-effect of containerizing processes is that logs are not sent to somewhere in /var/log, they’re output to stdout.
+
+This makes it easy to view container logs as it just requires the container engine to just read stdout on the container when you want to view the logs. This is essentially what the command `docker logs` does.
+
+![docker logs example](img/shell_docker_logs.png)
+
+
 ### docker stop / kill
 
 Docker command to stop a running container:
