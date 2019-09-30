@@ -11,6 +11,7 @@
 | `docker run`    | Run an image as a container                | `docker run -d -p 80:80 repo/name:1.0.1` |
 | `docker ps`     | List containers                            | `docker ps`                              |
 | `docker exec`   | Execute a command in a running container   | `docker exec -it aabbccddeeff ps -ef`    |
+| `docker logs`   | Display logs from a container              | `docker logs aabbccddeeff`               |
 | `docker stop`   | Stop a running container                   | `docker stop aabbccddeeff`               |
 | `docker kill`   | Kill a running container                   | `docker kill aabbccddeeff`               |
 | `docker rm`     | Remove a stopped container                 | `docker rm aabbccddeeff`                 |
