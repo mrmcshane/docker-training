@@ -250,4 +250,4 @@ Then there are several excersizes that will guide you through a lot of the basic
 2. [Custom Image](https://github.com/mrmcshane/docker-training/tree/master/02-custom-image)
 3. [Database Container](https://github.com/mrmcshane/docker-training/tree/master/03-database-container)
 4. [Multi-container Application](https://github.com/mrmcshane/docker-training/tree/master/04-multi-container-application)
-5. [Networking](https://github.com/valtech-uk/docker-training/tree/master/05-networking)
+5. [Networking](https://github.com/mrmcshane/docker-training/tree/master/05-networking)
