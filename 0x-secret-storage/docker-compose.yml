@@ -20,7 +20,7 @@ services:
       - network-secrets
     environment:
       - VAULT_URL=http://vault:8200
-      - VAULT_TOKEN=s.zRCl8MSY0N3Kx8GEMwmYgtaq
+      - VAULT_TOKEN=s.dsOC6zOAiuCAhVkJnFoTQgYF
 volumes:
   vault-fs:
 networks:

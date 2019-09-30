@@ -64,6 +64,14 @@ key:username
 value:password99
 ```
 
+Add the root secret to the docker-compose file under the key `VAULT_TOKEN`:
+```    
+environment:
+  - VAULT_URL=http://vault:8200
+  - VAULT_TOKEN=s.dsOC6zOAiuCAhVkJnFoTQgYF
+```
+**Note:** I am storing this secret in github as it's part of the example, please never do this, even if it's a private repo. Best practice is to have the `VAULT_TOKEN` added in from an environment variable in your CI pipeline or something.
+
 ## Build the Containers
 
 Using docker compose, force a build and run it in detached mode:
