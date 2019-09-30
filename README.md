@@ -251,3 +251,5 @@ Then there are several excersizes that will guide you through a lot of the basic
 3. [Database Container](https://github.com/mrmcshane/docker-training/tree/master/03-database-container)
 4. [Multi-container Application](https://github.com/mrmcshane/docker-training/tree/master/04-multi-container-application)
 5. [Networking](https://github.com/mrmcshane/docker-training/tree/master/05-networking)
+
+If you want a cheatsheet of the commands, visit [cheatsheet](https://github.com/mrmcshane/docker-training/tree/master/cheatsheet.md).
